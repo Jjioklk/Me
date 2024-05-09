@@ -75,9 +75,9 @@ See the [contribution guidelines](https://github.com/nlohmann/json/blob/master/.
 
 You can sponsor this library at [GitHub Sponsors](https://github.com/sponsors/nlohmann).
 
-### :office: Corporate Sponsor
+### :raising_hand: Priority Sponsor
 
-[![](https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Codacy-logo-black.svg/320px-Codacy-logo-black.svg.png)](https://github.com/codacy/About)
+- [Martti Laine](https://github.com/codeclown)
 
 ### :label: Named Sponsors
 
@@ -385,7 +385,7 @@ struct MyIterator {
     using iterator_category = std::input_iterator_tag;
 
     MyIterator& operator++() {
-        MyContainer.advance();
+        target->advance();
         return *this;
     }
 
@@ -394,7 +394,7 @@ struct MyIterator {
     }
 
     reference operator*() const {
-        return target.get_current();
+        return target->get_current();
     }
 
     MyContainer* target = nullptr;
@@ -1273,7 +1273,7 @@ Example:
 ```cmake
 include(FetchContent)
 
-FetchContent_Declare(json URL https://github.com/nlohmann/json/releases/download/v3.11.2/json.tar.xz)
+FetchContent_Declare(json URL https://github.com/nlohmann/json/releases/download/v3.11.3/json.tar.xz)
 FetchContent_MakeAvailable(json)
 
 target_link_libraries(foo PRIVATE nlohmann_json::nlohmann_json)
@@ -1337,6 +1337,8 @@ If you are using [vcpkg](https://github.com/Microsoft/vcpkg/) on your project fo
 If you are using [cget](https://cget.readthedocs.io/en/latest/), you can install the latest development version with `cget install nlohmann/json`. A specific version can be installed with `cget install nlohmann/json@v3.1.0`. Also, the multiple header version can be installed by adding the `-DJSON_MultipleHeaders=ON` flag (i.e., `cget install nlohmann/json -DJSON_MultipleHeaders=ON`).
 
 If you are using [CocoaPods](https://cocoapods.org), you can use the library by adding pod `"nlohmann_json", '~>3.1.2'` to your podfile (see [an example](https://bitbucket.org/benman/nlohmann_json-cocoapod/src/master/)). Please file issues [here](https://bitbucket.org/benman/nlohmann_json-cocoapod/issues?status=new&status=open).
+
+If you are using [Swift Package Manager](https://swift.org/package-manager/), you can use the library by adding a package dependency to this repository. And target dependency as `.product(name: "nlohmann-json", package: "json")`.
 
 If you are using [NuGet](https://www.nuget.org), you can use the package [nlohmann.json](https://www.nuget.org/packages/nlohmann.json/). Please check [this extensive description](https://github.com/nlohmann/json/issues/1132#issuecomment-452250255) on how to use the package. Please file issues [here](https://github.com/hnkb/nlohmann-json-nuget/issues).
 
@@ -1731,6 +1733,36 @@ I deeply appreciate the help of the following people.
 314. [Berkus Decker](https://github.com/berkus) fixed a typo in the README.
 315. [Illia Polishchuk](https://github.com/effolkronium) improved the CMake testing.
 316. [Ikko Ashimine](https://github.com/eltociear) fixed a typo.
+317. [Raphael Grimm](https://github.com/barcode) added the possibility to define a custom base class.
+318. [tocic](https://github.com/tocic) fixed typos in the documentation.
+319. [Vertexwahn](https://github.com/Vertexwahn) added Bazel build support.
+320. [Dirk Stolle](https://github.com/striezel) fixed typos in the documentation.
+321. [DavidKorczynski](https://github.com/DavidKorczynski) added a CIFuzz CI GitHub action.
+322. [Finkman](https://github.com/Finkman) fixed the debug pretty-printer.
+323. [Florian Segginger](https://github.com/floriansegginger) bumped the years in the README.
+324. [haadfida](https://github.com/haadfida) cleaned up the badges of used services.
+325. [Arsen Arsenović](https://github.com/ArsenArsen) fixed a build error.
+326. [theevilone45](https://github.com/theevilone45) fixed a typo in a CMake file.
+327. [Sergei Trofimovich](https://github.com/trofi) fixed the custom allocator support.
+328. [Joyce](https://github.com/joycebrum) fixed some security issues in the GitHub workflows.
+329. [Nicolas Jakob](https://github.com/njakob) add vcpkg version badge.
+330. [Tomerkm](https://github.com/Tomerkm) added tests.
+331. [No.](https://github.com/tusooa) fixed the use of `get<>` calls.
+332. [taro](https://github.com/tarolling) fixed a typo in the `CODEOWNERS` file.
+333. [Ikko Eltociear Ashimine](https://github.com/eltociear) fixed a typo.
+334. [Felix Yan](https://github.com/felixonmars) fixed a typo in the README.
+335. [HO-COOH](https://github.com/HO-COOH) fixed a parentheses in the documentation.
+336. [Ivor Wanders](https://github.com/iwanders) fixed the examples to catch exception by `const&`.
+337. [miny1233](https://github.com/miny1233) fixed a parentheses in the documentation.
+338. [tomalakgeretkal](https://github.com/tomalakgeretkal) fixed a compilation error.
+339. [alferov](https://github.com/ALF-ONE) fixed a compilation error.
+340. [Craig Scott](https://github.com/craigscott-crascit) fixed a deprecation warning in CMake.
+341. [Vyacheslav Zhdanovskiy](https://github.com/ZeronSix) added macros for serialization-only types.
+342. [Mathieu Westphal](https://github.com/mwestphal) fixed typos.
+343. [scribam](https://github.com/scribam) fixed the MinGW workflow.
+344. [Aleksei Sapitskii](https://github.com/aleksproger) added support for Apple's Swift Package Manager.
+345. [Benjamin Buch](https://github.com/bebuch) fixed the installation path in CMake.
+346. [Colby Haskell](https://github.com/colbychaskell) clarified the parse error message in case a file cannot be opened.
 
 Thanks a lot for helping out! Please [let me know](mailto:mail@nlohmann.me) if I forgot someone.
 

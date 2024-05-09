@@ -1,9 +1,9 @@
 //     __ _____ _____ _____
 //  __|  |   __|     |   | |  JSON for Modern C++ (supporting code)
-// |  |  |__   |  |  | | | |  version 3.11.2
+// |  |  |__   |  |  | | | |  version 3.11.3
 // |_____|_____|_____|_|___|  https://github.com/nlohmann/json
 //
-// SPDX-FileCopyrightText: 2013-2022 Niels Lohmann <https://nlohmann.me>
+// SPDX-FileCopyrightText: 2013-2023 Niels Lohmann <https://nlohmann.me>
 // SPDX-FileCopyrightText: 2018 Vitaliy Manushkin <agri@akamo.info>
 // SPDX-License-Identifier: MIT
 
@@ -158,7 +158,7 @@ class alt_string
     }
 
   private:
-    std::string str_impl {};
+    std::string str_impl {}; // NOLINT(readability-redundant-member-init)
 
     friend bool operator<(const char* /*op1*/, const alt_string& /*op2*/) noexcept;
 };
