@@ -169,7 +169,7 @@ TEST_CASE("regression tests 1")
         }
     }
 
-#if JSON_DISABLE_ENUM_SERIALIZATION != 0
+#if JSON_DISABLE_ENUM_SERIALIZATION
     SECTION("pull request #71 - handle enum type")
     {
         enum { t = 0, u = 102};
@@ -192,7 +192,7 @@ TEST_CASE("regression tests 1")
             {"game_type", t}
         }));
     }
-#endif
+#endif // JSON_DISABLE_ENUM_SERIALIZATION
 
     SECTION("issue #76 - dump() / parse() not idempotent")
     {

@@ -130,12 +130,12 @@ static void to_json(nlohmann::json& j, const contact& c)
     j = json{{"person", c.m_person}, {"address", c.m_address}};
 }
 
-#if JSON_DISABLE_ENUM_SERIALIZATION != 0
+#if JSON_DISABLE_ENUM_SERIALIZATION
 static void to_json(nlohmann::json& j, const contact_book& cb)
 {
     j = json{{"name", cb.m_book_name}, {"id", cb.m_book_id}, {"contacts", cb.m_contacts}};
 }
-#endif
+#endif // JSON_DISABLE_ENUM_SERIALIZATION
 
 // operators
 static bool operator==(age lhs, age rhs)
@@ -221,14 +221,14 @@ static void from_json(const nlohmann::json& j, contact& c)
     c.m_address = j["address"].get<address>();
 }
 
-#if JSON_DISABLE_ENUM_SERIALIZATION != 0
+#if JSON_DISABLE_ENUM_SERIALIZATION
 static void from_json(const nlohmann::json& j, contact_book& cb)
 {
     cb.m_book_name = j["name"].get<name>();
     cb.m_book_id = j["id"].get<book_id>();
     cb.m_contacts = j["contacts"].get<std::vector<contact>>();
 }
-#endif
+#endif // JSON_DISABLE_ENUM_SERIALIZATION
 } // namespace udt
 
 TEST_CASE("basic usage" * doctest::test_suite("udt"))
@@ -257,7 +257,7 @@ TEST_CASE("basic usage" * doctest::test_suite("udt"))
         CHECK(json("Paris") == json(addr));
         CHECK(json(cpp_programmer) ==
               R"({"person" : {"age":23, "name":"theo", "country":"France"}, "address":"Paris"})"_json);
-#if JSON_DISABLE_ENUM_SERIALIZATION != 0
+#if JSON_DISABLE_ENUM_SERIALIZATION
         CHECK(json(large_id) == json(static_cast<std::uint64_t>(1) << 63));
         CHECK(json(large_id) > 0u);
         CHECK(to_string(json(large_id)) == "9223372036854775808");
@@ -266,7 +266,7 @@ TEST_CASE("basic usage" * doctest::test_suite("udt"))
         CHECK(
             json(book) ==
             R"({"name":"C++", "id":42, "contacts" : [{"person" : {"age":23, "name":"theo", "country":"France"}, "address":"Paris"}, {"person" : {"age":42, "country":"中华人民共和国", "name":"王芳"}, "address":"Paris"}]})"_json);
-#endif
+#endif // JSON_DISABLE_ENUM_SERIALIZATION
     }
 
     SECTION("conversion from json via free-functions")
@@ -275,11 +275,11 @@ TEST_CASE("basic usage" * doctest::test_suite("udt"))
             R"({"name":"C++", "id":42, "contacts" : [{"person" : {"age":23, "name":"theo", "country":"France"}, "address":"Paris"}, {"person" : {"age":42, "country":"中华人民共和国", "name":"王芳"}, "address":"Paris"}]})"_json;
         SECTION("via explicit calls to get")
         {
-#if JSON_DISABLE_ENUM_SERIALIZATION != 0
+#if JSON_DISABLE_ENUM_SERIALIZATION
             const auto parsed_book = big_json.get<udt::contact_book>();
             const auto book_name = big_json["name"].get<udt::name>();
             const auto book_id = big_json["id"].get<udt::book_id>();
-#endif
+#endif // JSON_DISABLE_ENUM_SERIALIZATION
             const auto contacts =
                 big_json["contacts"].get<std::vector<udt::contact>>();
             const auto contact_json = big_json["contacts"].at(0);
@@ -298,11 +298,11 @@ TEST_CASE("basic usage" * doctest::test_suite("udt"))
             CHECK(person == sfinae_addict);
             CHECK(contact == cpp_programmer);
             CHECK(contacts == book.m_contacts);
-#if JSON_DISABLE_ENUM_SERIALIZATION != 0            
+#if JSON_DISABLE_ENUM_SERIALIZATION
             CHECK(book_name == udt::name{"C++"});
             CHECK(book_id == book.m_book_id);
             CHECK(book == parsed_book);
-#endif
+#endif // JSON_DISABLE_ENUM_SERIALIZATION
         }
 
         SECTION("via explicit calls to get_to")
@@ -317,7 +317,7 @@ TEST_CASE("basic usage" * doctest::test_suite("udt"))
             person_json["name"].get_to(name).m_val = "new name";
             CHECK(name.m_val == "new name");
         }
-#if JSON_DISABLE_ENUM_SERIALIZATION != 0                 
+#if JSON_DISABLE_ENUM_SERIALIZATION
 #if JSON_USE_IMPLICIT_CONVERSIONS
         SECTION("implicit conversions")
         {
@@ -347,7 +347,7 @@ TEST_CASE("basic usage" * doctest::test_suite("udt"))
             CHECK(book == parsed_book);
         }
 #endif
-#endif
+#endif // JSON_DISABLE_ENUM_SERIALIZATION
     }
 }
 

@@ -1263,7 +1263,7 @@ TEST_CASE("value conversion")
     }
 #endif
 
-#if JSON_DISABLE_ENUM_SERIALIZATION != 0
+#if JSON_DISABLE_ENUM_SERIALIZATION
     SECTION("get an enum")
     {
         enum c_enum { value_1, value_2 };
@@ -1272,7 +1272,7 @@ TEST_CASE("value conversion")
         CHECK(json(value_1).get<c_enum>() == value_1);
         CHECK(json(cpp_enum::value_1).get<cpp_enum>() == cpp_enum::value_1);
     }
-#endif
+#endif // JSON_DISABLE_ENUM_SERIALIZATION
 
     SECTION("more involved conversions")
     {
