@@ -36,15 +36,18 @@ static_assert(noexcept(json{}), "");
 static_assert(noexcept(nlohmann::to_json(std::declval<json&>(), 2)), "");
 static_assert(noexcept(nlohmann::to_json(std::declval<json&>(), 2.5)), "");
 static_assert(noexcept(nlohmann::to_json(std::declval<json&>(), true)), "");
-static_assert(noexcept(nlohmann::to_json(std::declval<json&>(), test{})), "");
 static_assert(noexcept(nlohmann::to_json(std::declval<json&>(), pod{})), "");
 static_assert(!noexcept(nlohmann::to_json(std::declval<json&>(), pod_bis{})), "");
 static_assert(noexcept(json(2)), "");
-static_assert(noexcept(json(test{})), "");
 static_assert(noexcept(json(pod{})), "");
 static_assert(noexcept(std::declval<json>().get<pod>()), "");
 static_assert(!noexcept(std::declval<json>().get<pod_bis>()), "");
 static_assert(noexcept(json(pod{})), "");
+
+#if JSON_DISABLE_ENUM_SERIALIZATION != 0
+    static_assert(noexcept(nlohmann::to_json(std::declval<json&>(), test{})), "");
+    static_assert(noexcept(json(test{})), "");
+#endif
 } // namespace
 
 TEST_CASE("noexcept")
