@@ -45,8 +45,8 @@ static_assert(!noexcept(std::declval<json>().get<pod_bis>()), "");
 static_assert(noexcept(json(pod{})), "");
 
 #if JSON_DISABLE_ENUM_SERIALIZATION
-    static_assert(noexcept(nlohmann::to_json(std::declval<json&>(), test{})), "");
-    static_assert(noexcept(json(test{})), "");
+static_assert(noexcept(nlohmann::to_json(std::declval<json&>(), test {})), "");
+static_assert(noexcept(json(test{})), "");
 #endif // JSON_DISABLE_ENUM_SERIALIZATION
 } // namespace
 

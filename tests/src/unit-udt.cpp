@@ -247,9 +247,9 @@ TEST_CASE("basic usage" * doctest::test_suite("udt"))
     const udt::address addr{"Paris"};
     const udt::contact cpp_programmer{sfinae_addict, addr};
 #if JSON_DISABLE_ENUM_SERIALIZATION
-    const udt::book_id large_id{static_cast<udt::book_id>(static_cast<std::uint64_t>(1) << 63)}; // verify large unsigned enums are handled correctly
+    const udt::book_id large_id {static_cast<udt::book_id>(static_cast<std::uint64_t>(1) << 63)}; // verify large unsigned enums are handled correctly
 #endif // JSON_DISABLE_ENUM_SERIALIZATION
-    const udt::contact_book book{{"C++"}, static_cast<udt::book_id>(42u), {cpp_programmer, {senior_programmer, addr}}};
+    const udt::contact_book book {{"C++"}, static_cast<udt::book_id>(42u), {cpp_programmer, {senior_programmer, addr}}};
 
     SECTION("conversion to json via free-functions")
     {
@@ -302,7 +302,7 @@ TEST_CASE("basic usage" * doctest::test_suite("udt"))
             CHECK(contact == cpp_programmer);
             CHECK(contacts == book.m_contacts);
 #if JSON_DISABLE_ENUM_SERIALIZATION
-            CHECK(book_name == udt::name{"C++"});
+            CHECK(book_name == udt::name {"C++"});
             CHECK(book_id == book.m_book_id);
             CHECK(book == parsed_book);
 #endif // JSON_DISABLE_ENUM_SERIALIZATION
