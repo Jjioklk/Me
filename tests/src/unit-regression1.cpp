@@ -1347,7 +1347,7 @@ TEST_CASE("regression tests 1")
             ); // handle different exceptions as 'file not found', 'permission denied'
 
             is_.open(TEST_DATA_DIRECTORY "/json_nlohmann_tests/all_unicode.json.cbor",
-                    std::ios_base::in | std::ios_base::binary);
+                     std::ios_base::in | std::ios_base::binary);
             json _;
             CHECK_NOTHROW(_ = nlohmann::json::from_cbor(is_));
         }
