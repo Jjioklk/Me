@@ -6232,14 +6232,14 @@ class input_stream_adapter
     {
         // clear stream flags; we use underlying streambuf I/O, do not
         // maintain ifstream flags, except eof
-        if (is != nullptr)
+        if (is_ != nullptr)
         {
-            is->clear(is->rdstate() & std::ios::eofbit);
+            is_->clear(is_->rdstate() & std::ios::eofbit);
         }
     }
 
     explicit input_stream_adapter(std::istream& i)
-        : is(&i), sb(i.rdbuf())
+        : is_(&i), sb_(i.rdbuf())
     {}
 
     // delete because of pointer members
@@ -6248,10 +6248,10 @@ class input_stream_adapter
     input_stream_adapter& operator=(input_stream_adapter&&) = delete;
 
     input_stream_adapter(input_stream_adapter&& rhs) noexcept
-        : is(rhs.is), sb(rhs.sb)
+        : is_(rhs.is_), sb_(rhs.sb_)
     {
-        rhs.is = nullptr;
-        rhs.sb = nullptr;
+        rhs.is_ = nullptr;
+        rhs.sb_ = nullptr;
     }
 
     // std::istream/std::streambuf use std::char_traits<char>::to_int_type, to
@@ -6259,19 +6259,19 @@ class input_stream_adapter
     // end up as the same value, e.g. 0xFFFFFFFF.
     std::char_traits<char>::int_type get_character()
     {
-        auto res = sb->sbumpc();
+        auto res = sb_->sbumpc();
         // set eof manually, as we don't use the istream interface.
         if (JSON_HEDLEY_UNLIKELY(res == std::char_traits<char>::eof()))
         {
-            is->clear(is->rdstate() | std::ios::eofbit);
+            is_->clear(is_->rdstate() | std::ios::eofbit);
         }
         return res;
     }
 
   private:
     /// the associated input stream
-    std::istream* is = nullptr;
-    std::streambuf* sb = nullptr;
+    std::istream* is_ = nullptr;
+    std::streambuf* sb_ = nullptr;
 };
 #endif  // JSON_NO_IO
 

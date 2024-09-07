@@ -1326,30 +1326,30 @@ TEST_CASE("regression tests 1")
     SECTION("issue #714 - throw std::ios_base::failure exception when failbit set to true")
     {
         {
-            std::ifstream is;
-            is.exceptions(
-                is.exceptions()
+            std::ifstream is_;
+            is_.exceptions(
+                is_.exceptions()
                 | std::ios_base::failbit
                 | std::ios_base::badbit
             ); // handle different exceptions as 'file not found', 'permission denied'
 
-            is.open(TEST_DATA_DIRECTORY "/regression/working_file.json");
+            is_.open(TEST_DATA_DIRECTORY "/regression/working_file.json");
             json _;
-            CHECK_NOTHROW(_ = nlohmann::json::parse(is));
+            CHECK_NOTHROW(_ = nlohmann::json::parse(is_));
         }
 
         {
-            std::ifstream is;
-            is.exceptions(
-                is.exceptions()
+            std::ifstream is_;
+            is_.exceptions(
+                is_.exceptions()
                 | std::ios_base::failbit
                 | std::ios_base::badbit
             ); // handle different exceptions as 'file not found', 'permission denied'
 
-            is.open(TEST_DATA_DIRECTORY "/json_nlohmann_tests/all_unicode.json.cbor",
-                    std::ios_base::in | std::ios_base::binary);
+            is_.open(TEST_DATA_DIRECTORY "/json_nlohmann_tests/all_unicode.json.cbor",
+                     std::ios_base::in | std::ios_base::binary);
             json _;
-            CHECK_NOTHROW(_ = nlohmann::json::from_cbor(is));
+            CHECK_NOTHROW(_ = nlohmann::json::from_cbor(is_));
         }
     }
 
